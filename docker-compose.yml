@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  # This starts the PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+
+  # This starts your Node.js Code
+  auth-service:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      DATABASE_URL: postgres://user:password@db:5432/auth_db
+      JWT_SECRET: my_super_secret_key
+    depends_on:
+      - db
