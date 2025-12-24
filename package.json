@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "jest", 
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "test": "node src/app.js",
     "coverage": "echo \"No coverage script yet\" && exit 0"
