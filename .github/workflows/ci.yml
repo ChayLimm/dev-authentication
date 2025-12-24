@@ -25,6 +25,8 @@ jobs:
       - name: Lint code
         run: npm run lint
       - name: Run tests
+        env:
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/testdb
         run: npm test
       - name: Run coverage
         run: npm run coverage
