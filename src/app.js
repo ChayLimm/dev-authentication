@@ -4,14 +4,18 @@ const authRoutes = require('./routes/authRoutes');
 
 const app = express();
 app.use(express.json());
-
 app.use('/auth', authRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
-// Sync database and start server
-sequelize.sync().then(() => {
-  app.listen(PORT, () => console.log(`Auth Service is live on port ${PORT}`));
-}).catch(err => {
-  console.error('Database connection failed:', err);
-});
+// Start server only if DB is available
+if (sequelize) {
+  sequelize.sync()
+    .then(() => {
+      app.listen(PORT, () => console.log(`Auth Service live on port ${PORT}`));
+    })
+    .catch(err => console.error('Database sync failed:', err));
+} else {
+  console.warn('Database not configured; starting without DB.');
+  app.listen(PORT, () => console.log(`Auth Service (no DB) on port ${PORT}`));
+}
