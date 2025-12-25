@@ -1,8 +1,16 @@
 const express = require('express');
+const cors = require('cors');  // Add this line
 const sequelize = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 
 const app = express();
+
+// Enable CORS before other middleware
+app.use(cors({
+  origin: 'https://devops-project-production-7653.up.railway.app',
+  credentials: true
+}));
+
 app.use(express.json());
 app.use('/auth', authRoutes);
 
